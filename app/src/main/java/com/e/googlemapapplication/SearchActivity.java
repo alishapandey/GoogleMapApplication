@@ -63,55 +63,6 @@ public class SearchActivity extends FragmentActivity implements OnMapReadyCallba
             }
         });
     }
-    private void fillArrayListAndSetAdapter() {
-
-        Latitduelongitudelist=new ArrayList<>();
-        Latitduelongitudelist.add(new LatitudeLongitude(27.73134484,85.3241922,"Naagpokhari"));
-        Latitduelongitudelist.add(new LatitudeLongitude(27.3173212,85.3173212,"Narayanhiti Palace Muesueum"));
-        Latitduelongitudelist.add(new LatitudeLongitude(27.7127827,85.3265391,"Hotel Brishaspti"));
-
-        String[] data=new String[Latitduelongitudelist.size()];
-
-        for(int i=0;i<data.length;i++){
-            data[i]=Latitduelongitudelist.get(i).getMarker();
-        }
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(
-                SearchActivity.this,
-                android.R.layout.simple_list_item_1,
-                data
-        );
-
-        etCity.setAdapter(adapter);
-        etCity.setThreshold(1);
-    }
-
-    private void loadMap(int position) {
-        if(markerName!=null){
-            markerName.remove();
-        }
-        double latitude=Latitduelongitudelist.get(position).getLat();
-        double longitude=Latitduelongitudelist.get(position).getLon();
-        String marker=Latitduelongitudelist.get(position).getMarker();
-        center=CameraUpdateFactory.newLatLng(new LatLng(latitude,longitude));
-        zoom=CameraUpdateFactory.zoomTo(17);
-        markerName=mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).title(marker));
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-
-    }
-
-
-
-    private int SearchArrayList(String name) {
-        for(int i=0; i<Latitduelongitudelist.size();i++){
-            if (Latitduelongitudelist.get(i).getMarker().contains(name)){
-                return 1;
-            }
-        }
-        return -1;
-    }
 
 
 
@@ -133,9 +84,56 @@ public class SearchActivity extends FragmentActivity implements OnMapReadyCallba
         mMap.animateCamera(zoom);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
+    private void loadMap(int position) {
+        if(markerName!=null){
+            markerName.remove();
+        }
+        double latitude=Latitduelongitudelist.get(position).getLat();
+        double longitude=Latitduelongitudelist.get(position).getLon();
+        String marker=Latitduelongitudelist.get(position).getMarker();
+        center=CameraUpdateFactory.newLatLng(new LatLng(latitude,longitude));
+        zoom=CameraUpdateFactory.zoomTo(17);
+        markerName=mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).title(marker));
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+    }
+
+
+    private void fillArrayListAndSetAdapter() {
+
+        Latitduelongitudelist=new ArrayList<>();
+        Latitduelongitudelist.add(new LatitudeLongitude(27.7134481,85.3241922,"Naagpokhari"));
+        Latitduelongitudelist.add(new LatitudeLongitude(27.7181749,85.3173212,"Narayanhiti Palace Muesueum"));
+        Latitduelongitudelist.add(new LatitudeLongitude(27.7127827,85.3265391,"Hotel Brishaspti"));
+
+        String[] data=new String[Latitduelongitudelist.size()];
+
+        for(int i=0;i<data.length;i++){
+            data[i]=Latitduelongitudelist.get(i).getMarker();
+        }
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(
+                SearchActivity.this,
+                android.R.layout.simple_list_item_1,
+                data
+        );
+
+        etCity.setAdapter(adapter);
+        etCity.setThreshold(1);
+    }
+    private int SearchArrayList(String name) {
+        for(int i=0; i<Latitduelongitudelist.size();i++){
+            if (Latitduelongitudelist.get(i).getMarker().contains(name)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
 }
